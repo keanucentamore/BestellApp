@@ -1,0 +1,95 @@
+/* HEADER */
+
+.site-header {
+    height: 128px;
+    background-color: var(--orange);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: min(100%, var(--content-width));
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 var(--side-space);
+}
+
+.app-logo {
+    width: 95px;
+}
+
+.menu-icon {
+    width: 60px;
+}
+
+/* HERO */
+
+.hero {
+    height: 440px;
+    background-image: url("./assets/images/header_photo.webp");
+    background-size: cover;
+    background-position: center;
+}
+
+.restaurant-intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 96px;
+}
+
+.restaurant-logo {
+    width: 228px;
+    height: 228px;
+    margin-top: -148px;
+    border-radius: 50%;
+}
+
+.restaurant-head {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-top: 12px;
+}
+
+.restaurant-name {
+    color: var(--orange);
+    font-family: var(--font-brand);
+    font-size: 48px;
+    font-weight: 600;
+}
+
+.restaurant-name-dark {
+    color: var(--dark);
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 10px;
+    border-radius: 4px;
+    background-color: var(--rating);
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.rating-star {
+    width: 20px;
+}
+
+.rating-count {
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.restaurant-description {
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.delivery-info {
+    margin-top: 4px;
+    font-size: 16px;
+}

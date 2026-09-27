@@ -1,0 +1,11 @@
+:root {
+    --orange: #e86a20;
+    --rating: #f8cbad;
+    --dark: #363534;
+
+    --font-main: "Palanquin", Arial, Helvetica, sans-serif;
+    --font-brand: "Palanquin Dark", Arial, Helvetica, sans-serif;
+
+    --content-width: 1440px;
+    --side-space: 118px;
+}
