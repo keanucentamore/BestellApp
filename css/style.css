@@ -28,7 +28,7 @@
 
 .hero {
     height: 440px;
-    background-image: url("./assets/images/header_photo.webp");
+    background-image: url("../assets/images/header_photo.webp");
     background-size: cover;
     background-position: center;
 }
