@@ -36,10 +36,65 @@ function getDishTemplate(dish) {
 
 
 function getDishButtonTemplate(id) {
-  return `<button class="dish-button">Add to basket</button>`;
+  let item = getBasketItem(id);
+  if (item == undefined) {
+    return `<button class="dish-button" onclick="addToBasket(${id})">Add to basket</button>`;
+  }
+  return `<button class="dish-button added" onclick="addToBasket(${id})">Added ${item.amount}</button>`;
 }
 
 
-function getFormattedPrice(price) {
-  return price.toFixed(2).replace('.', ',');
+function getBasketItemTemplate(item) {
+  return `
+    <li class="basket-item">
+      <p class="basket-item-name">${item.amount} x ${item.name}</p>
+      <div class="basket-item-row">
+        <div class="amount-control">
+          ${getDecreaseButtonTemplate(item)}
+          <span class="amount">${item.amount}</span>
+          <button class="amount-button" onclick="addToBasket(${item.id})">+</button>
+        </div>
+        <p class="basket-item-price">${getFormattedPrice(item.price * item.amount)}€</p>
+      </div>
+    </li>`;
+}
+
+
+function getDecreaseButtonTemplate(item) {
+  if (item.amount == 1) {
+    return `<button class="amount-button" onclick="removeFromBasket(${item.id})">
+              <img class="trash-icon" src="./assets/icons/icons_trash.svg" alt="Entfernen">
+            </button>`;
+  }
+  return `<button class="amount-button" onclick="decreaseAmount(${item.id})">−</button>`;
+}
+
+
+function getEmptyBasketTemplate() {
+  return `<li class="basket-empty">Your basket is empty.</li>`;
+}
+
+
+function getBasketSummaryTemplate(subtotal) {
+  let total = subtotal + deliveryFee;
+  return `
+    <div class="basket-summary">
+      <p class="summary-row"><span>Subtotal</span><span>${getFormattedPrice(subtotal)}</span></p>
+      <p class="summary-row"><span>Delivery fee</span><span>${getFormattedPrice(deliveryFee)}€</span></p>
+      <p class="summary-row summary-total"><span>Total</span><span>${getFormattedPrice(total)}€</span></p>
+    </div>
+    <button class="buy-button" onclick="placeOrder()">Buy now (${getFormattedPrice(total)}€)</button>`;
+}
+
+
+function getOrderDialogTemplate() {
+  return `
+    <div class="order-overlay">
+      <section class="order-box">
+        <button class="close-button" onclick="closeOrderDialog()">✕</button>
+        <img class="delivery-icon" src="./assets/icons/icons_delivery.svg" alt="">
+        <h2 class="order-title">Order confirmed!</h2>
+        <p class="order-text">Your food is on the way!</p>
+      </section>
+    </div>`;
 }
