@@ -26,12 +26,21 @@ function getDishTemplate(dish) {
       <div class="dish-body">
         <div class="dish-head">
           <h3 class="dish-name">${dish.name}</h3>
-          <p class="dish-price">${getFormattedPrice(dish.price)}€</p>
+          <p class="dish-price dish-price-top">${getFormattedPrice(dish.price)}€</p>
         </div>
         <p class="dish-description">${dish.description}</p>
-        <div class="dish-action" id="dish-action-${dish.id}">${getDishButtonTemplate(dish.id)}</div>
+        ${getDishFooterTemplate(dish)}
       </div>
     </article>`;
+}
+
+
+function getDishFooterTemplate(dish) {
+  return `
+    <div class="dish-footer">
+      <p class="dish-price dish-price-bottom">${getFormattedPrice(dish.price)}€</p>
+      <div id="dish-action-${dish.id}">${getDishButtonTemplate(dish.id)}</div>
+    </div>`;
 }
 
 
@@ -41,6 +50,25 @@ function getDishButtonTemplate(id) {
     return `<button class="dish-button" onclick="addToBasket(${id})">Add to basket</button>`;
   }
   return `<button class="dish-button added" onclick="addToBasket(${id})">Added ${item.amount}</button>`;
+}
+
+
+function getBasketContentTemplate() {
+  return `
+    <ul class="basket-list">${getBasketItemsTemplate()}</ul>
+    ${getBasketSummaryTemplate(getSubtotal())}`;
+}
+
+
+function getBasketItemsTemplate() {
+  if (basket.length == 0) {
+    return getEmptyBasketTemplate();
+  }
+  let itemsHtml = '';
+  for (let i = 0; i < basket.length; i++) {
+    itemsHtml += getBasketItemTemplate(basket[i]);
+  }
+  return itemsHtml;
 }
 
 
@@ -76,14 +104,35 @@ function getEmptyBasketTemplate() {
 
 
 function getBasketSummaryTemplate(subtotal) {
-  let total = subtotal + deliveryFee;
+  let fee = getDeliveryFee();
+  let total = subtotal + fee;
   return `
     <div class="basket-summary">
       <p class="summary-row"><span>Subtotal</span><span>${getFormattedPrice(subtotal)}</span></p>
-      <p class="summary-row"><span>Delivery fee</span><span>${getFormattedPrice(deliveryFee)}€</span></p>
+      <p class="summary-row"><span>Delivery fee</span><span>${getFormattedPrice(fee)}€</span></p>
       <p class="summary-row summary-total"><span>Total</span><span>${getFormattedPrice(total)}€</span></p>
     </div>
-    <button class="buy-button" onclick="placeOrder()">Buy now (${getFormattedPrice(total)}€)</button>`;
+    <button class="buy-button" onclick="placeOrder()" ${getBuyButtonState()}>Buy now (${getFormattedPrice(total)}€)</button>`;
+}
+
+
+function getMobileBasketTemplate() {
+  return `
+    <div class="mobile-basket-overlay">
+      <section class="mobile-basket-box">
+        <button class="close-button" onclick="closeMobileBasket()">✕</button>
+        <h2 class="basket-title">Your Basket</h2>
+        <div id="mobile-basket-content">${getBasketContentTemplate()}</div>
+      </section>
+    </div>`;
+}
+
+
+function getBasketCountTemplate(count) {
+  if (count == 0) {
+    return '';
+  }
+  return `<span class="basket-count">${count}</span>`;
 }
 
 

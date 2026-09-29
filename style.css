@@ -100,8 +100,6 @@
 
 .menu-layout {
     display: flex;
-    width: min(100%, var(--content-width));
-    margin: 0 auto;
 }
 
 .menu {
@@ -123,7 +121,7 @@
     gap: 30px;
     height: 58px;
     margin-bottom: 25px;
-    padding-left: 169px;
+    padding-left: calc(var(--content-offset) + 169px);
     background-color: var(--orange);
     color: var(--white);
 }
@@ -145,13 +143,13 @@
 }
 
 
-/* DISHES */
+/* Gerichte */
 
 .dish-list {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    padding-left: var(--side-space);
+    padding-left: calc(var(--content-offset) + var(--side-space));
     padding-right: 480px;
 }
 
@@ -202,10 +200,15 @@
     line-height: 1.2;
 }
 
-.dish-action {
+.dish-footer {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
     margin-top: auto;
+}
+
+.dish-price-bottom {
+    display: none;
 }
 
 .dish-button {
@@ -234,7 +237,7 @@
     align-self: flex-start;
     width: var(--basket-width);
     flex-shrink: 0;
-    margin-left: -434px;
+    margin-left: calc(-1 * (var(--basket-width) + var(--content-offset)));
     padding: 60px 29px 48px 29px;
     border-radius: 24px 0 0 24px;
     background-color: var(--dark);
@@ -252,7 +255,7 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
-    max-height: 40vh;
+    height: 300px;
     overflow-y: auto;
     padding-right: 16px;
 }
@@ -342,8 +345,13 @@
     background-color: #c9561a;
 }
 
+.buy-button:disabled {
+    background-color: #8a8786;
+    cursor: default;
+}
 
-/* ORDER CONFIRMATION */
+
+/* ORDER-CONFIRMATION */
 
 .order-overlay {
     position: fixed;
@@ -362,6 +370,7 @@
     flex-direction: column;
     align-items: center;
     width: 415px;
+    max-width: 90%;
     padding: 20px 24px 36px 24px;
     border-radius: 28px;
     background-color: var(--dark);
@@ -405,6 +414,293 @@
     font-size: 16px;
 }
 
+.footer-links {
+    display: flex;
+    gap: 80px;
+}
+
 .site-footer a:hover {
     text-decoration: underline;
+}
+
+
+/* MOBILE-NAV */
+
+.bottom-nav {
+    position: sticky;
+    bottom: 0;
+    display: none;
+    justify-content: space-around;
+    align-items: center;
+    height: 56px;
+    background-color: var(--dark);
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+}
+
+.nav-icon,
+.nav-icon-active {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+.nav-icon-active {
+    display: none;
+}
+
+.nav-item:active .nav-icon {
+    display: none;
+}
+
+.nav-item:active .nav-icon-active {
+    display: block;
+}
+
+.basket-count {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: flex-start;
+    min-width: 18px;
+    height: 18px;
+    margin-left: -10px;
+    padding: 0 4px;
+    border-radius: 9px;
+    background-color: var(--orange);
+    color: var(--white);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+
+/* MOBILE-BASKET */
+
+.mobile-basket-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    justify-content: center;
+    align-items: flex-end;
+    width: 100%;
+    height: 100%;
+    background-color: var(--overlay);
+}
+
+.mobile-basket-box {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 440px;
+    margin: 0 16px;
+    padding: 20px 20px 32px 20px;
+    border-radius: 24px 24px 0 0;
+    background-color: var(--dark);
+    color: var(--white);
+    animation: slideInFromBottom 0.4s ease-in-out;
+}
+
+.mobile-basket-box.slide-out {
+    animation: slideOutToBottom 0.4s ease-in-out forwards;
+}
+
+@keyframes slideInFromBottom {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideOutToBottom {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(100%);
+    }
+}
+
+.mobile-basket-box .basket-list {
+    height: min(300px, 38vh);
+}
+
+.mobile-basket-box .basket-title {
+    margin-bottom: 16px;
+    color: var(--peach);
+    font-size: 32px;
+}
+
+
+/* TABLET */
+
+@media screen and (max-width: 1024px) {
+    :root {
+        --side-space: 48px;
+    }
+
+    .menu-icon,
+    .basket {
+        display: none;
+    }
+
+    .bottom-nav,
+    .mobile-basket-overlay {
+        display: flex;
+    }
+
+    .dish-list {
+        padding-right: var(--side-space);
+    }
+
+    .category-bar {
+        padding-left: 80px;
+    }
+}
+
+
+/*MOBILE */
+
+@media screen and (max-width: 480px) {
+    :root {
+        --side-space: 16px;
+    }
+
+    .site-header {
+        height: 64px;
+    }
+
+    .app-logo {
+        width: 64px;
+    }
+
+    .hero {
+        height: 340px;
+        margin: 16px 16px 0 16px;
+        border-radius: 16px;
+    }
+
+    .restaurant-intro {
+        padding: 0 16px 72px 16px;
+        text-align: center;
+    }
+
+    .restaurant-logo {
+        width: 110px;
+        height: 110px;
+        margin-top: -64px;
+    }
+
+    .restaurant-head {
+        flex-direction: column-reverse;
+        gap: 8px;
+    }
+
+    .restaurant-name {
+        font-size: 34px;
+    }
+
+    .restaurant-description {
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .category+.category {
+        margin-top: 80px;
+    }
+
+    .category-bar {
+        flex-direction: column;
+        justify-content: flex-end;
+        gap: 0;
+        height: 44px;
+        margin-bottom: 16px;
+        padding: 0 0 4px 0;
+    }
+
+    .category-icon {
+        width: 56px;
+        height: 56px;
+        align-self: center;
+    }
+
+    .category-title {
+        font-size: 24px;
+        line-height: 1;
+        text-align: center;
+    }
+
+    .dish-card {
+        flex-direction: column;
+        gap: 8px;
+        padding: 8px;
+    }
+
+    .dish-image {
+        width: 100%;
+        height: 90px;
+    }
+
+    .dish-body {
+        gap: 4px;
+        padding: 0 4px;
+    }
+
+    .dish-name {
+        font-size: 18px;
+    }
+
+    .dish-description {
+        max-width: none;
+        font-size: 13px;
+    }
+
+    .dish-price-top {
+        display: none;
+    }
+
+    .dish-price-bottom {
+        display: block;
+        font-size: 17px;
+        font-weight: 600;
+    }
+
+    .dish-footer {
+        justify-content: space-between;
+        margin-top: 8px;
+    }
+
+    .site-footer {
+        flex-direction: column-reverse;
+        gap: 4px;
+        height: auto;
+        padding: 20px 0;
+        font-size: 14px;
+    }
+
+    .footer-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .buy-button {
+        padding: 8px 28px;
+        font-size: 22px;
+    }
+
+    .order-title {
+        font-size: 28px;
+    }
+
+    .order-text {
+        font-size: 20px;
+    }
 }

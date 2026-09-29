@@ -65,25 +65,36 @@ function updateBasketView(id) {
 
 
 function renderBasket() {
-  let listRef = document.getElementById('basket-list');
-  listRef.innerHTML = '';
-  for (let i = 0; i < basket.length; i++) {
-    listRef.innerHTML += getBasketItemTemplate(basket[i]);
-  }
-  if (basket.length == 0) {
-    listRef.innerHTML = getEmptyBasketTemplate();
-  }
-  renderBasketSummary();
+  document.getElementById('basket-content').innerHTML = getBasketContentTemplate();
+  renderMobileBasketContent();
+  document.getElementById('basket-count').innerHTML = getBasketCountTemplate(getBasketCount());
 }
 
 
-function renderBasketSummary() {
-  let summaryRef = document.getElementById('basket-summary');
-  if (basket.length == 0) {
-    summaryRef.innerHTML = '';
-  } else {
-    summaryRef.innerHTML = getBasketSummaryTemplate(getSubtotal());
+function renderMobileBasketContent() {
+  let mobileRef = document.getElementById('mobile-basket-content');
+  if (mobileRef != null) {
+    mobileRef.innerHTML = getBasketContentTemplate();
   }
+}
+
+
+function getBasketCount() {
+  let count = 0;
+  for (let i = 0; i < basket.length; i++) {
+    count = count + basket[i].amount;
+  }
+  return count;
+}
+
+
+function openMobileBasket() {
+  document.getElementById('mobile-basket').innerHTML = getMobileBasketTemplate();
+}
+
+
+function closeMobileBasket() {
+  document.getElementById('mobile-basket').innerHTML = '';
 }
 
 
@@ -96,10 +107,27 @@ function getSubtotal() {
 }
 
 
+function getDeliveryFee() {
+  if (basket.length == 0) {
+    return 0;
+  }
+  return deliveryFee;
+}
+
+
+function getBuyButtonState() {
+  if (basket.length == 0) {
+    return 'disabled';
+  }
+  return '';
+}
+
+
 function placeOrder() {
   basket = [];
   renderMenu();
   renderBasket();
+  closeMobileBasket();
   document.getElementById('order-dialog').innerHTML = getOrderDialogTemplate();
 }
 

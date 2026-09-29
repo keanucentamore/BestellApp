@@ -12,4 +12,6 @@
     --content-width: 1440px;
     --side-space: 118px;
     --basket-width: 434px;
+
+    --content-offset: max(0px, calc((100% - var(--content-width)) / 2));
 }
